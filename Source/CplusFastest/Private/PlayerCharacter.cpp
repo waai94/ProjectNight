@@ -18,8 +18,8 @@ APlayerCharacter::APlayerCharacter()
 
 	// カメラ作成
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	CameraComponent->SetupAttachment(SpringArmComponent);
-	CameraComponent->bUsePawnControlRotation = false;
+	CameraComponent->SetupAttachment(GetMesh(), FName("head"));//カメラをメッシュのheadSocketにアタッチ
+	CameraComponent->bUsePawnControlRotation = false;//カメラがコントローラーの回転を使用しないように設定
 
 	//ステータスコンポーネントの生成
 	healthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));// HealthComponentの作成
