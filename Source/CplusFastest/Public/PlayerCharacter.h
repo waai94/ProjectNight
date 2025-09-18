@@ -21,6 +21,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void Tick(float DeltaTime) override;
 	// 入力関数
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -76,4 +77,6 @@ protected:
 
 		UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Weapon")
 		AGunBase* CurrentGun;// 現在の銃
+
+		void GetFocusedActor();// 注視しているアクターを取得
 };

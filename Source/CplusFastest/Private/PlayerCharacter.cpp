@@ -46,6 +46,13 @@ void APlayerCharacter::BeginPlay()
 			healthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::OnPlayerDeath);
 		}
 }
+
+void APlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	// 注視しているアクターを取得
+	GetFocusedActor();
+}
 // ダメージ処理
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
@@ -125,4 +132,25 @@ void APlayerCharacter::SetCurrentGun(AGunBase* NewGun)
 void APlayerCharacter::OnDiedBP_Implementation()
 {
 	// Blueprintで実装される死亡イベント
+}
+
+// 注視しているアクターを取得
+void APlayerCharacter::GetFocusedActor()
+{
+	FHitResult HitResult;// ヒット結果を格納する変数
+	FVector Start = CameraComponent->GetComponentLocation();// カメラの位置を取得
+	FVector ForwardVector = CameraComponent->GetForwardVector();// カメラの前方ベクトルを取得
+	FVector End = ((ForwardVector * 200.f) + Start);// レイの長さを200に設定
+	FCollisionQueryParams CollisionParams;// 衝突クエリパラメータの設定
+	CollisionParams.AddIgnoredActor(this);
+	bool bIsHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams);// レイキャストの実行
+	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);// デバッグラインの描画
+	if (bIsHit)
+	{
+		AActor* FocusedActor = HitResult.GetActor();
+		if (FocusedActor)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Focused Actor: %s"), *FocusedActor->GetName());
+		}
+	}
 }
