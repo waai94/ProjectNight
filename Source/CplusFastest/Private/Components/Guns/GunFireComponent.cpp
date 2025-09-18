@@ -49,3 +49,4 @@ void UGunFireComponent::OnStartFireBP_Implementation()
 void UGunFireComponent::OnStopFireBP_Implementation()
 {
 }
+

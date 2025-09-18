@@ -26,15 +26,22 @@ protected:
 	void Look(const FInputActionValue& Value);
 	void Fire(const FInputActionValue& Value);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Event")
+	void OnDiedBP();// Blueprintでの死亡イベント
+
+
+	// カメラコンポーネント
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UCameraComponent* CameraComponent;
+
+
 public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	// カメラコンポーネント
-	UPROPERTY(VisibleAnywhere)
-	class UCameraComponent* CameraComponent;
+	
 
-	// SpringArmでカメラを追従させる
+		// SpringArmでカメラを追従させる
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArmComponent;
 

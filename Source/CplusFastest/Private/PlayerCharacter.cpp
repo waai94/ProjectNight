@@ -104,6 +104,8 @@ void APlayerCharacter::OnPlayerDeath()
 
 	//キャラクターのラグドール化
 	GetMesh()->SetSimulatePhysics(true);
+	OnDiedBP();
+	
 }
 
 void APlayerCharacter::Fire(const FInputActionValue& Value)
@@ -118,4 +120,9 @@ void APlayerCharacter::Fire(const FInputActionValue& Value)
 void APlayerCharacter::SetCurrentGun(AGunBase* NewGun)
 {
 	CurrentGun = NewGun;
+}
+
+void APlayerCharacter::OnDiedBP_Implementation()
+{
+	// Blueprintで実装される死亡イベント
 }
