@@ -8,7 +8,12 @@ AGunBase::AGunBase()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));//ルートコンポーネントを作成
+	RootComponent = Root;//ルートコンポーネントをルートに設定
+	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMesh"));//銃のメッシュコンポーネントを作成
+	GunMesh->SetupAttachment(Root);//銃のメッシュコンポーネントをルートに接続
+	MuzzleLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("MuzzleLocation"));//銃口の位置コンポーネントを作成
+	MuzzleLocation->SetupAttachment(RootComponent);//銃口の位置コンポーネントを銃のメッシュコンポーネントに接続
 }
 
 // Called when the game starts or when spawned

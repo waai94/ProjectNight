@@ -39,11 +39,16 @@ void UHealthComponent::TakeDamage(float DamageAmount)
 	{
 		return; // No damage to apply or already dead
 	}
+
 	CurrentHealth -= DamageAmount;
-	if (CurrentHealth < 0.0f)
+	OnHealthChanged.Broadcast(CurrentHealth);// Broadcast health change event
+
+	UE_LOG(LogTemp, Warning, TEXT("Compoent:Actor took damage: %f, Current Health: %f"), DamageAmount, CurrentHealth);
+	if (CurrentHealth <= 0.0f)
 	{
 		CurrentHealth = 0.0f;
 		OnDeath.Broadcast();// Broadcast death event
+		UE_LOG(LogTemp, Warning, TEXT("Actor has died."));
 	}
 }
 // Heals the actor by the specified amount
