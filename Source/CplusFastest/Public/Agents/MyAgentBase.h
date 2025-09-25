@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UHealthComponent* HealthComp;//ヘルスコンポーネント
 
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	int teamID = 0;// チームID
+
 	UFUNCTION()
 	void OnAgentDeath();// 死亡処理
 public:	
@@ -32,5 +35,9 @@ public:
 
 	// Called to bind functionality to input
 
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	int GetTeamID() const { return teamID; }
 
+	UFUNCTION(BlueprintCallable)
+	void SetTeamID(int NewTeamID) { teamID = NewTeamID; }
 };

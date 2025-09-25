@@ -9,7 +9,8 @@
 #include "Components/SphereComponent.h"
 #include "PlayerCharacter.generated.h"
 
-class AGunBase;
+class AGunBase;// 銃の前方宣言
+class UIntactableObjectComponent;// 相互作用可能コンポーネントの前方宣言
 UCLASS(Blueprintable)
 class CPLUSFASTEST_API APlayerCharacter : public AMyAgentBase // 継承元を変更
 {
@@ -78,4 +79,6 @@ protected:
 	AGunBase* CurrentGun;
 
 	void GetFocusedActor();
+
+	AActor* FocusedActor;// 注視しているアクター
 };

@@ -4,6 +4,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GunBase.h"
+#include "Components/Status/IntractableObjectComponent.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -138,6 +139,7 @@ void APlayerCharacter::OnDiedBP_Implementation()
 	// Blueprintで実装される死亡イベント
 }
 
+// 注視しているアクターを取得し、相互作用ウィジェットの表示・非表示を管理
 void APlayerCharacter::GetFocusedActor()
 {
 	FHitResult HitResult;
@@ -147,13 +149,48 @@ void APlayerCharacter::GetFocusedActor()
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this);
 	bool bIsHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams);
-	//DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
 	if (bIsHit)
 	{
-		AActor* FocusedActor = HitResult.GetActor();
-		if (FocusedActor)
+		AActor* hitFocusedActor = HitResult.GetActor();
+		if (hitFocusedActor)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Focused Actor: %s"), *FocusedActor->GetName());
+			
+
+			if (UIntractableObjectComponent* IntractableComp = hitFocusedActor->FindComponentByClass<UIntractableObjectComponent>())
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Focused Actor: %s"), *hitFocusedActor->GetName());
+				// 注視しているアクターに相互作用コンポーネントがある場合、ウィジェットを表示
+				if (IntractableComp->IsIntractable())
+				{
+					IntractableComp->ShowIntractableWidget();			
+				}
+
+				if (this->FocusedActor && this->FocusedActor != hitFocusedActor)//もし前回注視していたアクターと異なる場合
+				{
+					// 前回注視していたアクターのウィジェットを非表示にする
+					if (UIntractableObjectComponent* PreviousIntractableComp = this->FocusedActor->FindComponentByClass<UIntractableObjectComponent>())
+					{
+						PreviousIntractableComp->HideIntractableWidget();
+					}
+				}
+				this->FocusedActor = hitFocusedActor;
+			}
+
+			
+		}
+		
+	}
+	else
+	{
+		// ヒットしなかった場合、前回注視していたアクターのウィジェットを非表示にする
+		if (this->FocusedActor)
+		{
+			if (UIntractableObjectComponent* PreviousIntractableComp = this->FocusedActor->FindComponentByClass<UIntractableObjectComponent>())
+			{
+				PreviousIntractableComp->HideIntractableWidget();
+			}
+			this->FocusedActor = nullptr;
 		}
 	}
 }
