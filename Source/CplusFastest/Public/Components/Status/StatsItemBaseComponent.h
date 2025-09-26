@@ -7,6 +7,7 @@
 #include "StatsItemBaseComponent.generated.h"
 
 class UCharacterStats;
+class AStatusItemBase;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPLUSFASTEST_API UStatsItemBaseComponent : public UActorComponent
 {

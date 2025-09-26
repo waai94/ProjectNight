@@ -3,6 +3,7 @@
 
 #include "Components/Status/StatsItemBaseComponent.h"
 #include "Components/Status/CharacterStats.h"
+#include "Items/StatusItemBase.h"
 
 
 // Sets default values for this component's properties
@@ -21,6 +22,11 @@ void UStatsItemBaseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AStatusItemBase* OwnerActor = Cast<AStatusItemBase>(GetOwner());
+	if (OwnerActor)
+	{
+		OwnerActor->OnStatsItemTouched.AddDynamic(this, &UStatsItemBaseComponent::PlayerTouchStatsItem);// ステータスアイテムに触れたときのイベントをバインド
+	}
 	// ...
 	
 }
@@ -57,6 +63,7 @@ void UStatsItemBaseComponent::OnStatsItemTouchedBP_Implementation(AActor* target
 void UStatsItemBaseComponent::ChangeCharacterStat(UCharacterStats* CharacterStats)
 {
 	if (!CharacterStats) return;
+	UE_LOG(LogTemp, Warning, TEXT("ChangeCharacterStat called"));
 	switch (statsType)
 	{
 	case defence:
