@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
+#include "Components/SceneComponent.h"
 #include "StatusItemBase.generated.h"
 
 class UCharacterStats;
@@ -22,7 +24,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USphereComponent* CollisionComponent;// 衝突判定用コンポーネント
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USceneComponent* SceneComponent;// シーンコンポーネント
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

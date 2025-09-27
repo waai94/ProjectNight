@@ -66,45 +66,45 @@ void UStatsItemBaseComponent::ChangeCharacterStat(UCharacterStats* CharacterStat
 	UE_LOG(LogTemp, Warning, TEXT("ChangeCharacterStat called"));
 	switch (statsType)
 	{
-	case defence:
+	case StatsEnum::Defence:
 	{
 		float NewDefence = CharacterStats->GetCurrentDefence() + valueToChangeStat;
 		CharacterStats->SetCurrentDefence(NewDefence);
 		break;
 	}
-	case movementSpeed:
+	case StatsEnum::MovementSpeed:
 	{
 		float NewMovementSpeed = CharacterStats->GetCurrentMovementSpeed() + valueToChangeStat;
 		CharacterStats->SetCurrentMovementSpeed(NewMovementSpeed);
 		break;
 	}
-	case accuracy:
+	case StatsEnum::Accuracy:
 	{
 		float NewAccuracy = CharacterStats->GetCurrentAccuracy() + valueToChangeStat;
 		CharacterStats->SetCurrentAccuracy(NewAccuracy);
 		break;
 	}
-	case throwPower:
+	case StatsEnum::ThrowPower:
 	{
 		// “Š±—Í‚Ìˆ—‚ğ’Ç‰Á—\’è
 		break;
 	}
-	case health:
+	case StatsEnum::Health:
 	{
 		// ‘Ì—Í‚Ìˆ—‚ğ’Ç‰Á—\’è
 		break;
 	}
-	case shield:
+	case StatsEnum::Shield:
 	{
 		// ƒV[ƒ‹ƒh‚Ìˆ—‚ğ’Ç‰Á—\’è
 		break;
 	}
-	case jump:
+	case StatsEnum::Jump:
 	{
 		// ƒWƒƒƒ“ƒv‚Ìˆ—‚ğ’Ç‰Á—\’è
 		break;
 	}
-	case additionalEffects:
+	case StatsEnum::AdditionalEffects:
 	{
 		// ’Ç‰ÁŒø‰Ê‚Ìˆ—‚ğ’Ç‰Á—\’è
 		break;

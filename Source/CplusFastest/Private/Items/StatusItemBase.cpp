@@ -12,6 +12,12 @@ AStatusItemBase::AStatusItemBase()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+	RootComponent = SceneComponent;
+
+	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionComponent"));
+	CollisionComponent->SetupAttachment(RootComponent);// 衝突判定用コンポーネントをシーンコンポーネントにアタッチ
+
 }
 
 // Called when the game starts or when spawned
@@ -19,6 +25,10 @@ void AStatusItemBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (CollisionComponent)
+	{
+		CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AStatusItemBase::OnOverlapBegin);// 衝突判定用コンポーネントのオーバーラップイベントをバインド
+	}
 }
 
 // Called every frame
