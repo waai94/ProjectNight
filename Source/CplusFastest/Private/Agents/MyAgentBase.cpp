@@ -4,6 +4,7 @@
 #include "Agents/MyAgentBase.h"
 #include "Components/Status/HealthComponent.h"
 #include "Components/Status/ItemDropComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AMyAgentBase::AMyAgentBase()
@@ -46,10 +47,16 @@ void AMyAgentBase::OnAgentDeath()
 {
 	// 死亡処理
 	GetMesh()->SetSimulatePhysics(true);//メッシュに物理シミュレーションを適用
+	UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+	if (CapsuleComp)
+	{
+		CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);//カプセルコンポーネントの衝突を無効化
+	}
 	UE_LOG(LogTemp, Warning, TEXT("Agent has died."));
 	if (IsValid(ItemDropComp))
 	{
 		ItemDropComp->DropItems(); // アイテムドロップ
+		UE_LOG(LogTemp, Log, TEXT("Item drop executed."));
 	}
 }
 

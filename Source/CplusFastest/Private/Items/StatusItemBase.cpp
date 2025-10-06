@@ -17,6 +17,7 @@ AStatusItemBase::AStatusItemBase()
 
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionComponent"));
 	CollisionComponent->SetupAttachment(RootComponent);// 衝突判定用コンポーネントをシーンコンポーネントにアタッチ
+	CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);// 全てのチャンネルに対してオーバーラップするように設定
 
 }
 
@@ -42,6 +43,15 @@ void AStatusItemBase::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, 
 {
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
-		OnStatsItemTouched.Broadcast(OtherActor);
+		if(APawn* hitPawn = Cast<APawn>(OtherActor))// 衝突したのがPawn（プレイヤーキャラクターなど）であれば
+		{
+			if (hitPawn->IsPlayerControlled())// プレイヤーが操作しているPawnであれば
+			{
+				OnStatsItemTouched.Broadcast(OtherActor);// デリゲートを呼び出す
+			}
+			
+		}
+	
+		
 	}
 }
