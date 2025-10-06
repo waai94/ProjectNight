@@ -22,7 +22,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "IntractableObject", meta = (AllowPrivateAccess = true))
 	bool bIsIntractable = true;// ‘ŠŒİì—p‰Â”\‚©‚Ç‚¤‚©
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "IntractableObject", meta = (AllowPrivateAccess = true))

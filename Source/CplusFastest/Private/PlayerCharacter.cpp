@@ -150,7 +150,7 @@ void APlayerCharacter::GetFocusedActor()
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this);
 	bool bIsHit = GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams);
-	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 0, 0, 1);
 	if (bIsHit)
 	{
 		AActor* hitFocusedActor = HitResult.GetActor();
@@ -160,11 +160,12 @@ void APlayerCharacter::GetFocusedActor()
 
 			if (UIntractableObjectComponent* IntractableComp = hitFocusedActor->FindComponentByClass<UIntractableObjectComponent>())
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Focused Actor: %s"), *hitFocusedActor->GetName());
+				//UE_LOG(LogTemp, Warning, TEXT("Focused Actor: %s"), *hitFocusedActor->GetName());
 				// 注視しているアクターに相互作用コンポーネントがある場合、ウィジェットを表示
 				if (IntractableComp->IsIntractable())
 				{
-					IntractableComp->ShowIntractableWidget();			
+					IntractableComp->ShowIntractableWidget();
+					UE_LOG(LogTemp, Warning, TEXT("Showing Intractable Widget for: %s"), *hitFocusedActor->GetName());
 				}
 
 				if (this->FocusedActor && this->FocusedActor != hitFocusedActor)//もし前回注視していたアクターと異なる場合

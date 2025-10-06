@@ -37,7 +37,7 @@ void UAttachableComponent::AttachToAgent(AMyAgentBase* targetAgent)// Agent
 	if(bCanAttach && targetAgent)
 	{
 		FAttachmentTransformRules attachRules(EAttachmentRule::SnapToTarget, true);
-		this->GetOwner()->AttachToComponent(targetAgent->GetMesh(), attachRules, FName("RightHandSocket")); // Attach to the agent's right hand socket
+		this->GetOwner()->AttachToComponent(targetAgent->GetMesh(), attachRules, FName("Head")); // Attach to the agent's head socket
 		bCanAttach = false;
 		OnAttachToAgentBP(targetAgent);
 	}

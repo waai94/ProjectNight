@@ -47,6 +47,7 @@ void UIntractableObjectComponent::ShowIntractableWidget()
 	{
 		//IntractableWidgetInstance->SetVisibility(ESlateVisibility::Visible);
 		IntractableWidgetInstance->AddToViewport();
+		UE_LOG(LogTemp, Warning, TEXT("IntractableWidgetInstance added to viewport."));
 	}
 }
 // 相互作用可能なウィジェットを非表示
