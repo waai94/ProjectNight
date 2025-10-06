@@ -28,6 +28,7 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void Fire(const FInputActionValue& Value);
+	void Interact(const FInputActionValue& Value);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Event")
 	void OnDiedBP();
@@ -59,6 +60,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "InputMapping")
 	class UInputAction* FireAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "InputMapping")
+	class UInputAction* InteractAction;// 相互作用アクション
 
 	UFUNCTION(Category = "Event")
 	void OnPlayerDeath();

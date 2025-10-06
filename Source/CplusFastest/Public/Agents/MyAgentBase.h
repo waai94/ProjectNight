@@ -7,6 +7,7 @@
 #include "MyAgentBase.generated.h"
 
 class UHealthComponent;
+class UItemDropComponent;
 UCLASS()
 class CPLUSFASTEST_API AMyAgentBase : public ACharacter
 {
@@ -23,6 +24,9 @@ protected:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UHealthComponent* HealthComp;//ヘルスコンポーネント
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UItemDropComponent* ItemDropComp;// アイテムドロップコンポーネント
 
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	int teamID = 0;// チームID

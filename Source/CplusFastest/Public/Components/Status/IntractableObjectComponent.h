@@ -8,6 +8,8 @@
 #include "IntractableObjectComponent.generated.h"
 
 
+class AMyAgentBase;
+class UAttachableComponent;
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent), Blueprintable)
 class CPLUSFASTEST_API UIntractableObjectComponent : public UActorComponent
 {
@@ -54,4 +56,10 @@ public:
 
 	UFUNCTION(BlueprintCallable,BlueprintPure)
 	UUserWidget* GetIntractableWidgetInstance() const { return IntractableWidgetInstance; }
+
+	UFUNCTION(BlueprintCallable)
+	void IntractStart(AActor* InteractingActor);// 相互作用処理
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Event")
+	void OnIntract(AMyAgentBase* InteractingAgent);// 相互作用イベント
 };

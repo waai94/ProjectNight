@@ -2,7 +2,8 @@
 
 
 #include "Components/Status/IntractableObjectComponent.h"
-
+#include "Agents/MyAgentBase.h"
+#include "Components/Status/AttachableComponent.h"
 // Sets default values for this component's properties
 UIntractableObjectComponent::UIntractableObjectComponent()
 {
@@ -55,4 +56,42 @@ void UIntractableObjectComponent::HideIntractableWidget()
 	{
 		IntractableWidgetInstance->RemoveFromParent();
 	}
+}
+
+// 相互作用処理
+void UIntractableObjectComponent::IntractStart(AActor* InteractingActor)
+{
+	if(!bIsIntractable)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Object is not intractable."));
+		return;
+	}
+	if(!InteractingActor)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InteractingActor is null."));
+		return;
+	}
+	AMyAgentBase* Agent = Cast<AMyAgentBase>(InteractingActor);
+	if(!Agent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InteractingActor is not of type AMyAgentBase."));
+		return;
+	}
+	// ここに相互作用の具体的な処理を追加
+	OnIntract(Agent);
+
+	UAttachableComponent* AttachableComp = GetOwner()->FindComponentByClass<UAttachableComponent>();
+	if(AttachableComp)
+	{
+		AttachableComp->AttachToAgent(Agent); // Agentにアタッチ
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No AttachableComponent found on the object."));
+	}
+}
+
+void UIntractableObjectComponent::OnIntract_Implementation(AMyAgentBase* InteractingAgent)
+{
+	// Blueprintで実装される相互作用イベント
 }

@@ -3,6 +3,7 @@
 
 #include "Agents/MyAgentBase.h"
 #include "Components/Status/HealthComponent.h"
+#include "Components/Status/ItemDropComponent.h"
 
 // Sets default values
 AMyAgentBase::AMyAgentBase()
@@ -12,6 +13,7 @@ AMyAgentBase::AMyAgentBase()
 
 	//ヘルスコンポーネント生成
 	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComp"));
+	ItemDropComp = CreateDefaultSubobject<UItemDropComponent>(TEXT("ItemDropComp"));
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +47,10 @@ void AMyAgentBase::OnAgentDeath()
 	// 死亡処理
 	GetMesh()->SetSimulatePhysics(true);//メッシュに物理シミュレーションを適用
 	UE_LOG(LogTemp, Warning, TEXT("Agent has died."));
+	if (IsValid(ItemDropComp))
+	{
+		ItemDropComp->DropItems(); // アイテムドロップ
+	}
 }
 
 void AMyAgentBase::Tick(float DeltaTime)

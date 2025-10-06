@@ -10,6 +10,8 @@
 #include "GunBase.generated.h"
 
 class UGunFireComponent;
+class AMyAgentBase;
+class UAttachableComponent;
 UCLASS()
 class CPLUSFASTEST_API AGunBase : public AActor
 {
@@ -32,6 +34,8 @@ protected:
 	USkeletalMeshComponent* GunMesh;//銃のメッシュ
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Gun")
 	UArrowComponent* MuzzleLocation;//銃口の位置
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Gun")
+	UAttachableComponent* AttachableComponent;//銃を持つためのコンポーネント
 
 	
 

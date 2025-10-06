@@ -3,6 +3,7 @@
 
 #include "GunBase.h"
 #include "Components/Guns/GunFireComponent.h"
+#include "Components/Status/AttachableComponent.h"
 // Sets default values
 AGunBase::AGunBase()
 {
@@ -14,6 +15,8 @@ AGunBase::AGunBase()
 	GunMesh->SetupAttachment(Root);//銃のメッシュコンポーネントをルートに接続
 	MuzzleLocation = CreateDefaultSubobject<UArrowComponent>(TEXT("MuzzleLocation"));//銃口の位置コンポーネントを作成
 	MuzzleLocation->SetupAttachment(RootComponent);//銃口の位置コンポーネントを銃のメッシュコンポーネントに接続
+	AttachableComponent = CreateDefaultSubobject<UAttachableComponent>(TEXT("AttachableComponent"));//銃を持つためのコンポーネントを作成
+
 }
 
 // Called when the game starts or when spawned

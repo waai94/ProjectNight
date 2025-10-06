@@ -81,6 +81,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		EnhancedInput->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 		EnhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 		EnhancedInput->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerCharacter::Fire);
+		EnhancedInput->BindAction(InteractAction, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	}
 }
 
@@ -191,6 +192,20 @@ void APlayerCharacter::GetFocusedActor()
 				PreviousIntractableComp->HideIntractableWidget();
 			}
 			this->FocusedActor = nullptr;
+		}
+	}
+}
+
+void APlayerCharacter::Interact(const FInputActionValue& Value)
+{
+	if (FocusedActor)
+	{
+		if (UIntractableObjectComponent* IntractableComp = FocusedActor->FindComponentByClass<UIntractableObjectComponent>())
+		{
+			if (IntractableComp->IsIntractable())
+			{
+				IntractableComp->IntractStart(this);
+			}
 		}
 	}
 }
